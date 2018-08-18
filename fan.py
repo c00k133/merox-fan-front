@@ -79,9 +79,9 @@ for v in triangle.all():
 # Create outer ring for base
 outer_ring = box.faces('>Z') \
         .workplane() \
-        .circle(inner_ring_radius) \
         .circle(b_body_diam / 2.0) \
-        .extrude(b_body_outer_thickness)
+        .circle(inner_ring_radius) \
+        .extrude(-b_body_outer_thickness)
 
 result = outer_ring
 
