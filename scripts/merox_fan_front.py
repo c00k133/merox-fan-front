@@ -4,22 +4,30 @@ import math
 
 class FanBase:
 
-    def __init__(self, options={'rgba': (204, 204, 204, 0.0)}):
+    def __init__(self,
+                 body_diam=75.0,
+                 body_inner_thickness=2.0,
+                 body_outer_thickness=1.0,
+                 body_outer_ring_width=2.0,
+                 post_outer_diameter=4.0,
+                 post_inner_diameter=2.0,
+                 post_height=4.0,
+                 triangle_side_len=45.0,
+                 options={'rgba': (204, 204, 204, 0.0)}):
         """
         Initialize new FanBase object.
 
         :param options: options for CadQuery's `show_object` function,
                         defaults to grey with zero transparency
         """
-        self.body_diam = 75.0
-        self.body_inner_thickness = 2.0
-        self.body_outer_thickness = 3.0
-        self.body_outer_ring_width = 2.0
-        self.post_outer_diameter = 4.0
-        self.post_inner_diameter = 2.0
-        self.post_height = 4.0
-        self.triangle_side_len = 45.0
-
+        self.body_diam = body_diam
+        self.body_inner_thickness = body_inner_thickness
+        self.body_outer_thickness = body_outer_thickness
+        self.body_outer_ring_width = body_outer_ring_width
+        self.post_outer_diameter = post_outer_diameter
+        self.post_inner_diameter = post_inner_diameter
+        self.post_height = post_height
+        self.triangle_side_len = triangle_side_len
         self.options = options
 
     def _calc_triangle_polygon_diam(self):
@@ -50,6 +58,13 @@ class FanBase:
              .circle(self.post_inner_diameter / 2.0) \
              .extrude(-self.post_height, True)
 
+    def _calc_outer_ring_thickness(self):
+        """
+        Helper function for calculating outer ring thickness.
+        Used for confining to PEP8 line length.
+        """
+        return self.body_outer_thickness + self.body_inner_thickness
+
     def create(self):
         """
         Create a CadQuery object out of this FanBase object.
@@ -68,11 +83,12 @@ class FanBase:
         self._create_screw_posts(triangle)
 
         # Create outer ring for base
+        outer_ring_thickness = self._calc_outer_ring_thickness()
         outer_ring = box.faces('>Z') \
                         .workplane() \
                         .circle(self.body_diam / 2.0) \
                         .circle(inner_ring_radius) \
-                        .extrude(-self.body_outer_thickness)
+                        .extrude(-outer_ring_thickness)
 
         return outer_ring
 
@@ -88,4 +104,9 @@ class FanBase:
         show_object(self.create(), options=options)  # noqa  # ignore PEP8
 
 
-FanBase().show()
+#FanBase().show()
+fanbase = FanBase().create()
+
+fanbase.faces('<Z') \
+       .circle(fanbase.inner_ring_radius) \
+
