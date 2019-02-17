@@ -3,7 +3,7 @@
 This is a base [CadQuery](https://github.com/dcowden/cadquery) script for teaching myself the basics of CAD software.
 I believed that starting with something that I am comfortable with might assist me in my learning process, i.e. CAD scripting in a language I am comfortable with (Python).
 
-This script creates a base for the front panel of a Merox Premium (40cm) fan.
+This script creates a base for the front panel of a [Merox Premium (40cm) fan](https://www.k-rauta.fi/rautakauppa/lattiatuuletin-merox-premium-40cm-valkoinen-alumiini).
 I bought one of these on sale during the extremely hot summer of 2018.
 When I put it together, I realized that I did not like the small circular front panel that came with the fan.
 So I decided that I would try to make my own!
