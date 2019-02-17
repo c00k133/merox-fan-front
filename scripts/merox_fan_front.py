@@ -2,6 +2,9 @@ import cadquery as cq
 import math
 
 
+show_object = show_object  # noqa
+
+
 class FanBase:
 
     def __init__(self,
@@ -99,14 +102,8 @@ class FanBase:
         :param options: optional options parameter for `show_object`, defaults
                         to options initialized with this object
         """
-        if options is None:
-            options = self.options
-        show_object(self.create(), options=options)  # noqa  # ignore PEP8
+        options = options or self.options
+        show_object(self.create(), options=options)
 
 
-#FanBase().show()
-fanbase = FanBase().create()
-
-fanbase.faces('<Z') \
-       .circle(fanbase.inner_ring_radius) \
-
+FanBase().show()
